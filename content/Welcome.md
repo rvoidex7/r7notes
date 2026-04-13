@@ -1,5 +1,3 @@
-This is your new *vault*.
+This is your new *digital garden*.
 
-Make a note of something, [[create a link]], or try [the Importer](https://help.obsidian.md/Plugins/Importer)!
-
-When you are ready, delete this note and make the vault your own.
+The first page: [[All Repositories]]
