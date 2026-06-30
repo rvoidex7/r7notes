@@ -1,0 +1,33 @@
+{
+	"nodes":[
+		{"id":"cc00000000000007","type":"group","x":-1000,"y":-550,"width":850,"height":1050,"color":"5","label":"System Engineering & Blockchain Dev"},
+		{"id":"cc00000000000008","type":"group","x":550,"y":-550,"width":450,"height":1050,"color":"4","label":"Game Wiki & Mechanics"},
+		{"id":"cc00000000000002","type":"file","file":"Development/Architecture.md","x":-950,"y":-500,"width":350,"height":210,"color":"5"},
+		{"id":"cc00000000000012","type":"file","file":"Development/Memory-and-FFI-Bridge.md","x":-950,"y":-250,"width":350,"height":210,"color":"5"},
+		{"id":"cc00000000000013","type":"file","file":"Development/TUI-Rendering-Pipeline.md","x":-950,"y":0,"width":350,"height":210,"color":"5"},
+		{"id":"cc00000000000020","type":"file","file":"Development/Engine-Code-Walkthrough.md","x":-950,"y":250,"width":350,"height":210,"color":"5"},
+		{"id":"cc00000000000003","type":"file","file":"Development/Anti-Cheat-Verification.md","x":-550,"y":-500,"width":350,"height":210,"color":"1"},
+		{"id":"cc00000000000014","type":"file","file":"Development/Deterministic-Physics.md","x":-550,"y":-250,"width":350,"height":210,"color":"1"},
+		{"id":"cc00000000000015","type":"file","file":"Development/Strike-Algorithm-Geometry.md","x":-550,"y":0,"width":350,"height":210,"color":"1"},
+		{"id":"cc00000000000016","type":"file","file":"Development/Bot-AI-Steering.md","x":-550,"y":250,"width":350,"height":210,"color":"1"},
+		{"id":"cc00000000000004","type":"file","file":"Wiki/Gameplay.md","x":600,"y":-500,"width":350,"height":210,"color":"4"},
+		{"id":"cc00000000000005","type":"file","file":"Wiki/Items-and-Synergies.md","x":600,"y":-250,"width":350,"height":210,"color":"3"},
+		{"id":"cc00000000000010","type":"file","file":"Wiki/Energy-and-Movement.md","x":600,"y":0,"width":350,"height":210,"color":"3"},
+		{"id":"cc00000000000011","type":"file","file":"Wiki/Entities.md","x":600,"y":250,"width":350,"height":210,"color":"3"},
+		{"id":"cc00000000000001","type":"text","text":"# CrawlCipher Project Hub\n\nDouble-click the surrounding file cards to view details on game mechanics, anti-cheat physics, and blockchain integration.","x":0,"y":-120,"width":350,"height":210,"color":"6"}
+	],
+	"edges":[
+		{"id":"edge1","fromNode":"cc00000000000001","fromSide":"left","toNode":"cc00000000000002","toSide":"right"},
+		{"id":"edge2","fromNode":"cc00000000000001","fromSide":"left","toNode":"cc00000000000012","toSide":"right"},
+		{"id":"edge3","fromNode":"cc00000000000001","fromSide":"left","toNode":"cc00000000000013","toSide":"right"},
+		{"id":"edge12","fromNode":"cc00000000000001","fromSide":"left","toNode":"cc00000000000020","toSide":"right"},
+		{"id":"edge4","fromNode":"cc00000000000001","fromSide":"left","toNode":"cc00000000000003","toSide":"right"},
+		{"id":"edge5","fromNode":"cc00000000000001","fromSide":"left","toNode":"cc00000000000014","toSide":"right"},
+		{"id":"edge6","fromNode":"cc00000000000001","fromSide":"left","toNode":"cc00000000000015","toSide":"right"},
+		{"id":"edge7","fromNode":"cc00000000000001","fromSide":"left","toNode":"cc00000000000016","toSide":"right"},
+		{"id":"edge8","fromNode":"cc00000000000001","fromSide":"right","toNode":"cc00000000000004","toSide":"left"},
+		{"id":"edge9","fromNode":"cc00000000000001","fromSide":"right","toNode":"cc00000000000005","toSide":"left"},
+		{"id":"edge10","fromNode":"cc00000000000001","fromSide":"right","toNode":"cc00000000000010","toSide":"left"},
+		{"id":"edge11","fromNode":"cc00000000000001","fromSide":"right","toNode":"cc00000000000011","toSide":"left"}
+	]
+}
