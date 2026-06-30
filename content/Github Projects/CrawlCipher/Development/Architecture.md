@@ -8,42 +8,37 @@ CrawlCipher is designed as a hybrid dApp split into three decoupled components: 
 
 The overall structure and interface bridges are diagrammed below:
 
-```mermaid
-graph TD
-    %% Frontend Group
-    subgraph Rust TUI (crawlcipher)
-        TUI[Terminal GUI - Ratatui]
-        Loader[Dynamic Library Loader - libloading]
-        StellarAPI[Stellar Interface - stellar-cli & reqwest]
-    end
-
-    %% Engine Group
-    subgraph C# Core Engine (CrawlCipher.Core.so)
-        FFI[FFI Export Layer]
-        Engine[Game Engine - Grid & Snake State]
-        RNG[Deterministic RNG]
-        Logger[Input Log recorder]
-    end
-
-    %% Blockchain Group
-    subgraph Stellar Testnet Blockchain
-        Horizon[Stellar Horizon API]
-        Contract[Soroban Contract - session-lock]
-    end
-
-    %% Interactions
-    TUI -->|Loads| Loader
-    Loader -->|Invokes C ABI| FFI
-    FFI -->|Updates & Inputs| Engine
-    Engine -->|Reads| RNG
-    Engine -->|Logs| Logger
-    
-    TUI -->|Fetches Latest Block Hash| Horizon
-    Horizon -->|Seed Entropy| TUI
-    TUI -->|Initializes Engine with Seed| Loader
-    
-    TUI -->|Lock Loadout / Submit Proof| StellarAPI
-    StellarAPI -->|Invokes Contract| Contract
+```
++-----------------------------------------------------------------------+
+|                       RUST TUI (crawlcipher)                          |
+|  +-----------------------+     +------------------+     +----------+  |
+|  |  Terminal GUI         |     |  Dynamic Loader  |     | Stellar  |  |
+|  |  (Ratatui/Crossterm)  |===> |  (libloading)    |     | API & CLI|  |
+|  +-----------+-----------+     +--------+---------+     +----+-----+  |
++--------------|--------------------------|-------------------|---------+
+               |                          |                   |
+               | (Reads Block Hash)       | (Invokes C-ABI)   | (Invokes contract)
+               v                          v                   v
++--------------|--------------------------|-------------------|---------+
+|              |                          |                   |         |
+|  +-----------v-----------+     +--------v---------+     +---v------+  |
+|  |  Deterministic Seed   |     |  C-ABI FFI Layer |     | Soroban  |  |
+|  |  Entropy Loader       |     |  (FFIExports)    |     | Contract |  |
+|  +-----------+-----------+     +--------+---------+     +----------+  |
+|              |                          |                             |
+|              v                          v                             |
+|  +-----------------------+     +--------+---------+                   |
+|  |  Deterministic RNG    |===> |  Game Core       |                   |
+|  |  (System.Random)      |     |  (Grid & Snake)  |                   |
+|  +-----------------------+     +--------+---------+                   |
+|                                         |                             |
+|                                         v                             |
+|                                +------------------+                   |
+|                                |  Input Log       |                   |
+|                                |  (Replay Record) |                   |
+|                                +------------------+                   |
+|                   C# CORE ENGINE (NativeAOT Shared Library)           |
++-----------------------------------------------------------------------+
 ```
 
 ---
