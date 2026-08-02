@@ -1,6 +1,6 @@
 # FAQ — How Does This Actually Work?
 
-Questions a technically-minded visitor tends to ask when they first inspect CrawlCipher — and the honest answers, including what is *not* solved. Short answers here; every deep dive links to the page that owns the topic. For a visual overview, see the [CrawlCipher Mindmap Canvas](./CrawlCipher_Mindmap.canvas) or start at [System Architecture](./Development/Architecture.md).
+Questions a technically-minded visitor tends to ask when they first inspect CrawlCipher — and the honest answers, including what is *not* solved. Short answers here; every deep dive links to the page that owns the topic. For a visual overview, see [[CrawlCipher_Mindmap.canvas|CrawlCipher Mindmap Canvas]] or start at [[Architecture|System Architecture]].
 
 Answers describing **implemented, verifiable code** are written plainly. Anything that is design-decided but not yet in the engine carries this marker:
 
@@ -13,11 +13,11 @@ Answers describing **implemented, verifiable code** are written plainly. Anythin
 
 ### Why should I trust results from a game that runs entirely on the player's machine?
 
-You shouldn't — and the design assumes you won't. CrawlCipher uses a **Proof of Execution** model: the engine is deterministic, every input is logged, and the outcome of a session can be re-computed by anyone from the seed and the input log. Trust is replaced by *replayability*. Full mechanism: [Cryptographic Anti-Cheat & Verification](./Development/Anti-Cheat-Verification.md).
+You shouldn't — and the design assumes you won't. CrawlCipher uses a **Proof of Execution** model: the engine is deterministic, every input is logged, and the outcome of a session can be re-computed by anyone from the seed and the input log. Trust is replaced by *replayability*. Full mechanism: [[Anti-Cheat-Verification|Cryptographic Anti-Cheat & Verification]].
 
 ### Isn't keeping the engine source closed just security through obscurity?
 
-Yes, it would be — and we agree with the criticism. The engine follows [Kerckhoffs's principle](https://en.wikipedia.org/wiki/Kerckhoffs%27s_principle): the system must stay secure even when everything except players' keys is public. Nothing in the verification design depends on the code being secret (the one legacy exception, the MVP salt, has been removed — see [the salt question](#whats-actually-inside-the-session-hash) below).
+Yes, it would be — and we agree with the criticism. The engine follows [Kerckhoffs's principle](https://en.wikipedia.org/wiki/Kerckhoffs%27s_principle): the system must stay secure even when everything except players' keys is public. Nothing in the verification design depends on the code being secret (the one legacy exception, the MVP salt, has been removed — see [[#What's actually inside the session hash?|the salt question]] below).
 
 > [!note] Planned — not yet in the engine
 > The Core engine source will be fully open-sourced once the proof format no longer contains any secrecy-dependent component. This is a scheduled milestone, not a "maybe".
@@ -26,7 +26,7 @@ Yes, it would be — and we agree with the criticism. The engine follows [Kerckh
 
 This is *the* central attack, and it is answered structurally, not by hiding code:
 
-1. **The seed doesn't exist yet when you commit to playing.** A session is locked on-chain first — the contract records the lock-time ledger sequence — and only then is the seed derived from the hash of the [ledger closed right after the lock](./Development/Anti-Cheat-Verification.md#2-dynamic-entropy-via-stellar-ledger). There is nothing to pre-compute against.
+1. **The seed doesn't exist yet when you commit to playing.** A session is locked on-chain first — the contract records the lock-time ledger sequence — and only then is the seed derived from the hash of the [[Anti-Cheat-Verification#2. Dynamic Entropy via Stellar Ledger|ledger closed right after the lock]]. There is nothing to pre-compute against.
 2. **Every attempt has a cost.** Re-trying means locking a new session on-chain. "Infinite free retries" don't exist; grinding becomes an economic decision, not a free lunch.
 3. What remains possible is searching for good inputs *after* the seed is known, during the session window — a tool-assisted-play problem, not a forgery problem.
 
@@ -64,7 +64,7 @@ Only in a game that rewards what automation is good at. That is a *game-design* 
 
 ### What stops classic memory editing (Cheat Engine style)?
 
-Editing memory changes the outcome without changing the input log — so the replayed session no longer matches the submitted result, and verification fails. See [Replay Verification](./Development/Anti-Cheat-Verification.md#4-replay-verification--state-hashing).
+Editing memory changes the outcome without changing the input log — so the replayed session no longer matches the submitted result, and verification fails. See [[Anti-Cheat-Verification#4. Replay Verification & State Hashing|Replay Verification]].
 
 ### Can someone forge a winning hash without playing at all?
 
@@ -80,14 +80,14 @@ Sessions are locked per player in the Soroban contract; a proof is only accepted
 
 ### What's actually inside the session hash?
 
-**Proof format v1** (current): `SHA-256(seed | engine version | config hash | complete input log | "CRAWLCIPHER_PROOF_V1")`, computed by the engine at session end — details in [Anti-Cheat & Verification](./Development/Anti-Cheat-Verification.md#4-replay-verification--state-hashing). The config hash commits to the *full* effective `GameConfig` (every field, including nested weapon/wave/scoring/death-penalty settings) — not just grid dimensions. There is no private salt anymore: `CRAWLCIPHER_PROOF_V1` is a **public version tag** — under replay verification a secret salt adds nothing, and a public tag doubles as the format version field.
+**Proof format v1** (current): `SHA-256(seed | engine version | config hash | complete input log | "CRAWLCIPHER_PROOF_V1")`, computed by the engine at session end — details in [[Anti-Cheat-Verification#4. Replay Verification & State Hashing|Anti-Cheat & Verification]]. The config hash commits to the *full* effective `GameConfig` (every field, including nested weapon/wave/scoring/death-penalty settings) — not just grid dimensions. There is no private salt anymore: `CRAWLCIPHER_PROOF_V1` is a **public version tag** — under replay verification a secret salt adds nothing, and a public tag doubles as the format version field.
 
 > [!note] Planned — not yet in the engine
 > Once modding lands, the config hash will also cover the hash of the loaded Lua script bundle, so every modded ruleset gets its own verifiable proof domain.
 
 ### Who verifies proofs, and what happens when one is fraudulent?
 
-The model mirrors the fraud-proof philosophy of [optimistic rollups](https://ethereum.org/en/developers/docs/scaling/optimistic-rollups/): results are accepted by default, and any auditor can replay a session and trigger a fraud proof on mismatch — see [the verification workflow](./Development/Anti-Cheat-Verification.md#4-replay-verification--state-hashing).
+The model mirrors the fraud-proof philosophy of [optimistic rollups](https://ethereum.org/en/developers/docs/scaling/optimistic-rollups/): results are accepted by default, and any auditor can replay a session and trigger a fraud proof on mismatch — see [[Anti-Cheat-Verification#4. Replay Verification & State Hashing|the verification workflow]].
 
 > [!note] Planned — not yet in the engine
 > The long-term design is a **decentralized, player-operated verification network** with bounties for catching fraud (specified in the internal design docs). That network is *why* the engine must be open source: verifiers re-run the same code everyone can inspect.
@@ -102,11 +102,11 @@ Because re-running this simulation is nearly free, and [zk proofs](https://en.wi
 
 ### How can a game session replay bit-identically on a different machine?
 
-Because the simulation is built for it from day one: integer grid state, a fixed tick rate, no wall-clock time inside the sim, a single seeded RNG, and a ban on floating-point math in game logic. Same seed + same inputs ⇒ same final state, on any machine. Details: [Deterministic Physics](./Development/Deterministic-Physics.md).
+Because the simulation is built for it from day one: integer grid state, a fixed tick rate, no wall-clock time inside the sim, a single seeded RNG, and a ban on floating-point math in game logic. Same seed + same inputs ⇒ same final state, on any machine. Details: [[Deterministic-Physics|Deterministic Physics]].
 
 ### Where does in-game randomness come from?
 
-From the Stellar network itself: for online sessions, the hash of the ledger closed right after the on-chain session lock is fetched and reduced to a 64-bit seed (currently via the Horizon API; an RPC migration is on the roadmap). See [Dynamic Entropy via Stellar Ledger](./Development/Anti-Cheat-Verification.md#2-dynamic-entropy-via-stellar-ledger).
+From the Stellar network itself: for online sessions, the hash of the ledger closed right after the on-chain session lock is fetched and reduced to a 64-bit seed (currently via the Horizon API; an RPC migration is on the roadmap). See [[Anti-Cheat-Verification#2. Dynamic Entropy via Stellar Ledger|Dynamic Entropy via Stellar Ledger]].
 
 ### Isn't relying on `System.Random` fragile across .NET versions?
 
@@ -126,7 +126,7 @@ Yes, you could — which is why **fairness is never allowed to depend on client-
 
 ### Why is the engine C# but the client Rust — and what is NativeAOT for?
 
-Candidly: C# because it is one of the most familiar game-development languages (the Unity/Godot world), which keeps the door open for binding the engine to other frontends someday. Rust with [ratatui](https://ratatui.rs/) because the goal was a game you can open in any terminal, anywhere, instantly — and a cell-based UI that redraws only what changed is exactly ratatui's home turf. The glue is [.NET NativeAOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/): it compiles the C# engine ahead-of-time into a plain native shared library — no .NET runtime for players to install — which the Rust binary loads directly over a C ABI, in one process. Deep dives: [System Architecture](./Development/Architecture.md) and [Memory & FFI Bridge](./Development/Memory-and-FFI-Bridge.md).
+Candidly: C# because it is one of the most familiar game-development languages (the Unity/Godot world), which keeps the door open for binding the engine to other frontends someday. Rust with [ratatui](https://ratatui.rs/) because the goal was a game you can open in any terminal, anywhere, instantly — and a cell-based UI that redraws only what changed is exactly ratatui's home turf. The glue is [.NET NativeAOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/): it compiles the C# engine ahead-of-time into a plain native shared library — no .NET runtime for players to install — which the Rust binary loads directly over a C ABI, in one process. Deep dives: [[Architecture|System Architecture]] and [[Memory-and-FFI-Bridge|Memory & FFI Bridge]].
 
 ---
 
@@ -153,7 +153,7 @@ No — the rails come from the engine: input logging, hashing, seeding, sandboxi
 
 ### Lua numbers are floating-point — doesn't that break determinism?
 
-It would, if scripts called raw math-library functions (`math.sin` and friends are approximated differently by each platform's math library — see [Floating-Point Restrictions](./Development/Deterministic-Physics.md#1-floating-point-restrictions) for why). The plan is a **deterministic math surface**: the engine exposes helpers for anything risky, *implemented inside the core with its own deterministic algorithms* — not by forwarding to the OS math library, which would just move the same problem one layer down. Integer arithmetic (which modern Lua has natively) is always safe, and grid-and-tick games rarely need more.
+It would, if scripts called raw math-library functions (`math.sin` and friends are approximated differently by each platform's math library — see [[Deterministic-Physics#1. Floating-Point Restrictions|Floating-Point Restrictions]] for why). The plan is a **deterministic math surface**: the engine exposes helpers for anything risky, *implemented inside the core with its own deterministic algorithms* — not by forwarding to the OS math library, which would just move the same problem one layer down. Integer arithmetic (which modern Lua has natively) is always safe, and grid-and-tick games rarely need more.
 
 ---
 
@@ -165,7 +165,7 @@ For the three things a blockchain is genuinely good at here: **unpredictable pub
 
 ### Why Stellar and Soroban instead of Ethereum?
 
-Low, predictable fees and fast finality make per-session locks practical, and [Soroban](https://developers.stellar.org/docs/build/smart-contracts/overview) contracts cover what the design needs. The optimistic fraud-proof *pattern* is borrowed from the Ethereum ecosystem; the platform is not. Component layout: [System Architecture](./Development/Architecture.md).
+Low, predictable fees and fast finality make per-session locks practical, and [Soroban](https://developers.stellar.org/docs/build/smart-contracts/overview) contracts cover what the design needs. The optimistic fraud-proof *pattern* is borrowed from the Ethereum ecosystem; the platform is not. Component layout: [[Architecture|System Architecture]].
 
 ### Does my gameplay data leave my machine?
 

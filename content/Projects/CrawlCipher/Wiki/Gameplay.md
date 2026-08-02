@@ -17,7 +17,7 @@ CrawlCipher's current build is a tactical, grid-based, turn-calculated snake sim
 6. **Extract:** When the wave count or time objective is complete, the Exit Portal activates. Navigate the snake's head to the portal and survive the countdown to extract.
 7. **Unlock & Record:** Submit the final session hash to release your locked blockchain assets and record your new scores.
 
-Curious how steps 2 and 7 make cheating cryptographically detectable? See [[Anti-Cheat & Verification]] and [[Deterministic Physics]].
+Curious how steps 2 and 7 make cheating cryptographically detectable? See [[Anti-Cheat-Verification|Anti-Cheat & Verification]] and [[Deterministic-Physics|Deterministic Physics]].
 
 ---
 
