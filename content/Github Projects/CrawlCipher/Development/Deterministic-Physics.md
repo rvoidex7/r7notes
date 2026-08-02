@@ -6,15 +6,17 @@ To support trustless blockchain verification (Proof of Execution), CrawlCipher's
 
 ## 1. Floating-Point Restrictions
 
-In standard game engines, positions and velocities are represented using floating-point types (`float` or `double`). However, floating-point math is notoriously non-deterministic across different CPUs:
+In standard game engines, positions and velocities are represented using floating-point types (`float` or `double`). However, floating-point math is [notoriously non-deterministic across different CPUs](https://gafferongames.com/post/floating_point_determinism/):
 - Intel/AMD processors may use x87 80-bit float registers or SSE 64-bit instructions, resulting in slightly different rounding values.
 - ARM processors handle floating-point denormals (extremely small numbers close to zero) differently than x86 processors.
 - Compiler optimizations (like `/fp:fast` in C++ or JIT optimization in .NET) can reorder operations, modifying precision.
 
 ### Solution in CrawlCipher:
-To prevent these desynchronizations, the Core C# Engine **completely bans the use of floats and doubles** in physics and pathfinding calculations.
+To prevent these desynchronizations, the Core C# Engine keeps all *state-carrying* math in integers and confines floating point to a few IEEE-exact spots:
 - **Coordinates:** Grid positions are strictly integer-based 2D vectors (`Vector2Int` or simple `int X, Y`).
 - **Speeds/Dividers:** Speed rules (e.g. Snail speed) are processed using integer divisions and tick counters rather than delta-time multipliers (e.g., a Snail moves once every 2 ticks instead of multiplying position by `0.5 * deltaTime`).
+- **Where floats do appear** (score multipliers, strike-geometry scaling, A* priority ordering), they use only basic operations — `+ - * /`, `Abs`, `Min`, `Max` — whose results are **bit-exactly specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_754)** and therefore identical on every 64-bit platform .NET runs on.
+- **What is banned outright is the dangerous class:** transcendental library functions (`Math.Sin`, `Math.Cos`, `Math.Exp`, `Math.Log`, `Math.Pow`). Their last bits are *not* standardized — each OS math library approximates differently — and the engine contains zero calls to them.
 
 ---
 

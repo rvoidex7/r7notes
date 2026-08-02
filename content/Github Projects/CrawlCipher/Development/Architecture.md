@@ -46,21 +46,24 @@ The overall structure and interface bridges are diagrammed below:
 ## 1. Subsystems
 
 ### A. Terminal Interface (Rust / Ratatui)
-The frontend terminal layout is built in Rust using the `ratatui` crate. It coordinates:
-- **UI & Input:** Capture inputs (keyboard/mouse) via `crossterm` raw mode, map mouse click coordinates to grid coordinates, and render status bars, game boards, menus, and overlays.
-- **Dynamic Link Loading:** Instead of compile-time linking, the frontend dynamically loads `libCrawlCipher.Core.so` (Linux) or `CrawlCipher.Core.dll` (Windows) using the `libloading` crate. This allows swapping core logic without recompiling the UI binary.
-- **Blockchain Connectivity:** Interacts with the Stellar network by calling Horizon REST APIs directly (for account stats and block hashes) and spawning the `stellar` CLI tool to interact with Soroban contracts.
+The frontend terminal layout is built in Rust using the [`ratatui`](https://ratatui.rs/) crate. It coordinates:
+- **UI & Input:** Capture inputs (keyboard/mouse) via [`crossterm`](https://crates.io/crates/crossterm) raw mode, map mouse click coordinates to grid coordinates, and render status bars, game boards, menus, and overlays.
+- **Dynamic Link Loading:** Instead of compile-time linking, the frontend dynamically loads `libCrawlCipher.Core.so` (Linux) or `CrawlCipher.Core.dll` (Windows) using the [`libloading`](https://crates.io/crates/libloading) crate. This allows swapping core logic without recompiling the UI binary.
+- **Blockchain Connectivity:** Interacts with the Stellar network by calling [Horizon REST APIs](https://developers.stellar.org/docs/data/apis/horizon) directly (for account stats and block hashes) and spawning the [`stellar` CLI](https://developers.stellar.org/docs/tools/cli) tool to interact with Soroban contracts.
+
+> [!note] Planned — not yet in the client
+> Stellar has deprecated Horizon in favor of [Stellar RPC](https://developers.stellar.org/docs/data/apis/migrate-from-horizon-to-rpc); migrating the client's REST calls is tracked internally.
 
 ### B. Simulation Core (C# / .NET 8.0 NativeAOT)
 The underlying simulation state and logic are written in C# (`CrawlCipher.Core`).
-- **Native AOT:** Compiled using Microsoft's .NET NativeAOT toolchain. This publishes the managed C# library as a standard, self-contained unmanaged shared library (DLL/SO) with zero .NET runtime dependency requirements on the host machine.
+- **Native AOT:** Compiled using Microsoft's [.NET NativeAOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/) toolchain. This publishes the managed C# library as a standard, self-contained unmanaged shared library (DLL/SO) with zero .NET runtime dependency requirements on the host machine.
 - **Deterministic Loop:** Tracks coordinates, snakes, entities, grids, and tick counts. To remain 100% replayable and fair, it forbids calling `DateTime.Now` or system timers, relying solely on a seed-linked `System.Random` generator.
 - **C-ABI Export Layer:** Exposes unmanaged entry points via `[UnmanagedCallersOnly]` so the Rust frontend can map struct layouts sequentially in memory and invoke actions.
 
 ### C. Soroban Session Lock Contract (Rust / WASM)
-A smart contract deployed on the Stellar testnet (`smart-contracts/session-lock`):
+A [Soroban](https://developers.stellar.org/docs/build/smart-contracts/overview) smart contract deployed on the Stellar testnet (`smart-contracts/session-lock`):
 - **Asset Lock (`lock_session`):** Locks a list of game items (identified by asset IDs) for a user address to prevent trading or double-spending during an active game session.
-- **Release and Prove (`unlock_session`):** Releases the kilit (lock) when the client submits the final cryptographic session verification hash.
+- **Release and Prove (`unlock_session`):** Releases the lock when the client submits the final cryptographic session verification hash.
 
 ---
 

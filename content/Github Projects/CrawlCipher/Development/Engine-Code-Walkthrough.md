@@ -6,15 +6,16 @@ This document provides a detailed walkthrough of the unmanaged C# simulation eng
 
 ## 1. Project Structure
 
-The engine is contained within three primary files under the `CrawlCipher.Core/` directory:
+The engine lives under `CrawlCipher.Core/`, organized by subsystem (folderized 2026-07-06). The whole simulation is still **one class** — `GameEngine` — split across files with C# `partial class` (a compile-time construct: the compiler merges the parts, so the layout has zero runtime cost):
 
-1.  **`Types.cs`:** Defines the data structures, enums, and serializable representation of entities.
-2.  **`GameCore.cs`:** Contains the core orchestrator (`GameEngine`) managing physics, ticks, energy, AI, and combat rules.
-3.  **`FFIExports.cs`:** Exposes C-compatible pointers and structures to the dynamic linker for Rust interop.
+1.  **`Models/`** — data structures: `Player.cs` (Player, SnakeSegment, WeaponData), `Bullet.cs`, `Snail.cs`, and `Types.cs` (enums, FFI structs, configs, `InputFrame`).
+2.  **`GameCore.cs`** — the `GameEngine` root: lifecycle, configuration, input processing, inventory, replay hashing.
+3.  **Subsystem partials** — `Physics/GameEngine.Movement.cs`, `Combat/GameEngine.Combat.cs`, `AI/GameEngine.Steering.cs`, `Pathfinding/GameEngine.Pathfinder.cs`.
+4.  **`FFI/FFIExports.cs`** — exposes C-compatible pointers and structures to the dynamic linker for Rust interop.
 
 ---
 
-## 2. Structural Memory Models (`Types.cs`)
+## 2. Structural Memory Models (`Models/`)
 
 To pass data across the Rust border without marshalling overhead, entities use two representations: **Managed Classes** (for internal C# simulation) and **Unmanaged Structs** (sequential layouts passed to Rust).
 
@@ -47,7 +48,7 @@ public class SegmentData
 
 ---
 
-## 3. Simulation Loop & Physics (`GameCore.cs`)
+## 3. Simulation Loop & Physics (`GameCore.cs` + subsystem partials)
 
 The `GameEngine` class orchestrates the gameplay ticks. It manages a state machine defined by `SimulationStateType`:
 
@@ -73,7 +74,7 @@ When the Rust TUI calls `Update(gamePtr)`, the engine executes the following seq
 
 ---
 
-## 4. Unmanaged Exports & Pinning (`FFIExports.cs`)
+## 4. Unmanaged Exports & Pinning (`FFI/FFIExports.cs`)
 
 The C# engine is compiled to native code using NativeAOT. It exposes entry points annotated with `[UnmanagedCallersOnly]`.
 
