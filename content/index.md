@@ -5,16 +5,16 @@ description: A digital garden of notes, projects, and ideas
 
 # Welcome to r7notes
 
-This is your personal knowledge base built with [Quartz](https://quartz.jzhao.xyz/).
+Welcome to **r7notes** — my personal knowledge base and public digital garden where I share my projects, technical documentation, and learning.
 
 ## Quick Navigation
 
-- [[All Repositories]] - Overview of all projects
-- [[Welcome]] - Getting started guide
+- [[All Repositories]] - Overview of all projects & repositories
+- [[CrawlCipher]] - Flagship tactical turn-based dApp project
 
 ## What is this?
 
-r7notes is a public digital garden where I share my notes, learning, and projects. It's powered by Quartz, a static site generator for your notes.
+r7notes is a public digital garden powered by [Quartz](https://quartz.jzhao.xyz/). Feel free to explore the notes and repositories.
 
 ---
 
