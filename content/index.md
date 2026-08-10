@@ -11,7 +11,7 @@ Welcome to **r7notes** — my personal knowledge base and public digital garden 
 ## Quick Navigation
 
 - [[Connect]] - Social links, developer profiles & contact
-- [[All Repositories]] - Overview of all projects & repositories
+- [[Projects/index]] - Overview of all projects & repositories
 - [[CrawlCipher]] - Flagship tactical turn-based dApp project
 
 ## What is this?
