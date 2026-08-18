@@ -12,7 +12,7 @@
 | ![[jira-obsidian-sync.png\|57]]   | <span style="font-size: 1.15em;">**[[Projects/Jira Obsidian Sync/index\|jira-obsidian-sync]]**</span> ([GitHub](https://github.com/rvoidex7/jira-obsidian-sync))<br>Rust-based, Synchronizes between the Obsidian Kanban plugin and Jira Kanban                                                                 |
 | ![[java-elabs-tts.png\|57]]       | <span style="font-size: 1.15em;">**java-elabs-tts**</span> ([GitHub](https://github.com/rvoidex7/java-elabs-tts))<br>Java-based Text-to-Speech (ElevenLabs) conversion system.                                                                                                                   |
 | ![[excel-toplam-macro.png\|57]]   | <span style="font-size: 1.15em;">**excel-toplam-makro**</span> ([GitHub](https://github.com/rvoidex7/excel-toplam-makro))<br>It performs a sum across rows in Excel (by date)                                                                                                                    |
-| ![[SatrancNotasyon.png\|57]]      | <span style="font-size: 1.15em;">**[[Projects/SatrancNotasyon/index]]**</span> ([GitHub](https://github.com/rvoidex7/SatrancNotasyon))<br>You can practice chess notation                                                                                                                                       |
+| ![[SatrancNotasyon.png\|57]]      | <span style="font-size: 1.15em;">**[[Projects/SatrancNotasyon/index\|SatrancNotasyon]]**</span> ([GitHub](https://github.com/rvoidex7/SatrancNotasyon))<br>You can practice chess notation                                                                                                                                       |
 
 
 ### Active Development Open Source
