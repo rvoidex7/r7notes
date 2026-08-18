@@ -4,7 +4,7 @@ description: Social links, developer profiles, and direct contact channels for E
 ---
 ![[photo.jpeg]]
 # Y. Ekrem Özcan - rvoidex7
-### Full Stack developer
+### Full Stack Developer
 
 
 ---
