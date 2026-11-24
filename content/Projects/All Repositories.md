@@ -16,7 +16,7 @@
 
 | ⬜   |                                                                                                       |
 | --- | ----------------------------------------------------------------------------------------------------- |
-| ⬜   | [[Projects/Entropy Forge/index\|entropy-forge]] ([GitHub](https://github.com/rvoidex7/entropy-forge)) |
+| ⬜   | [[Projects/r7crypto/index\|r7crypto]] ([GitHub](https://github.com/rvoidex7/r7crypto)) |
 | ⬜   | [[Projects/web-intelligence/index\|web-intelligence-rs]] ([GitHub](https://github.com/rvoidex7/web-intelligence-rs)) |
 | ⬜   | [[CrawlCipher]] ([GitHub](https://github.com/rvoidex7/CrawlCipher)) |
 | ⬜   | ats-cv-Create ([GitHub](https://github.com/rvoidex7/ats-cv-Create))                                   |

@@ -12,6 +12,8 @@ Welcome to **r7notes** — my personal knowledge base and public digital garden 
 
 - [[Connect]] - Social links, developer profiles & contact
 - [[All Repositories]] - Overview of all projects & repositories
+- [[Cryptography/index|Cryptography]] - Notes on entropy, RNGs, stream ciphers and post-quantum reading
+- [[Projects/r7crypto/index|r7crypto]] - Interactive cryptography workbench — the hands-on counterpart to the crypto notes
 - [[CrawlCipher]] - Flagship tactical turn-based dApp project
 
 ## What is this?
