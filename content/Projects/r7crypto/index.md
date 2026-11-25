@@ -36,16 +36,8 @@ The fourth benefit is about checkability, not a personal portfolio claim. The wo
 |---|---|
 | Platforms | Linux, Windows, browser/WASM — one codebase |
 | GUI | `egui` / `eframe`, with screen-reader support via `accesskit` |
-| Tests | 197, plus the feature matrix, wasm type-checks and a headless browser smoke test |
+| Tests | 198, plus the feature matrix, wasm type-checks and a headless browser smoke test |
 | In progress | Avalanche distribution, benchmark labelling, Two-Time Pad, in-app links to these notes |
 | Deferred | Android / Play Store, macOS, aarch64, mobile tab bar |
 
 Current release notes and binaries live in the [repository releases](https://github.com/rvoidex7/r7crypto/releases); they are not duplicated here.
-
-## In this folder
-
-- [[Projects/r7crypto/Architecture|Architecture]] — module layout, data flow, design decisions
-- [[Projects/r7crypto/Dependencies|Dependencies]] — every crate and why it is there
-- [[Projects/r7crypto/Interface|Interface]] — what the tabs do today
-- [[Projects/r7crypto/Build-and-Release|Build and Release]] — local build, CI, packaging
-- [[Projects/r7crypto/Roadmap|Roadmap]] — current priority order and where to contribute

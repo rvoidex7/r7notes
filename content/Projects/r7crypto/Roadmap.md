@@ -52,6 +52,7 @@ No dates. Order matters more than timing. The full internal version lives in the
 - `std::thread::spawn` is gone from the job path: native threads, wasm incremental frames.
 - In the browser, the **System** source means the Web Crypto API (`crypto.getRandomValues`), not the OS CSPRNG — see [[Projects/r7crypto/Dependencies|Dependencies]].
 - A headless Chromium smoke test checks console errors, uncaught exceptions, canvas/WebGL and the frame loop; its own detector is verified with `--self-test`.
+- Benchmarks use a shared `time::Clock`: `performance.now()` on wasm and `Instant` natively. Clicking **Run Benchmark** in the browser no longer panics or freezes; the host-only API guard stays in CI to prevent regressions.
 
 Web came before the Play Store because a reader should reach a working experiment in one click. Installing an app breaks that path.
 
@@ -80,7 +81,6 @@ Reference material is kept in the repo's gitignored `docs/03`. NDK + Gradle + Pl
 | Avalanche shows one sample, not a distribution | Medium — analyzer + visual rework |
 | Benchmark measures source speed only | Small — two labelled sections, use `benchmark_avg` |
 | No `egui_plot` histogram | Small — one dependency, one widget, added with the entropy map |
-| wasm host-only API guard fails on `Instant::now` in the benchmark and job poll | Small — clock fix is deliberately held until approved |
 | No mobile tab bar | Medium — layout only; 360 px overflow is already covered |
 | No in-app link to r7notes | Small-to-medium — the "Try" benefit depends on it |
 

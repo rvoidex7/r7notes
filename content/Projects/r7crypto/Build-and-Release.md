@@ -50,7 +50,7 @@ trunk build --release               # static site in dist/ (gitignored)
 | Workflow | Trigger | Does |
 |---|---|---|
 | `ci.yml` | push, PR, manual | Linux: fmt, Clippy, tests, feature matrix, wasm type-checks, browser smoke. Windows: `cargo check --all-targets --all-features --locked` |
-| `ci.yml` → `deploy` | `main`, after `test`, `lint`, `wasm`, `browser-smoke`, `windows` | Builds with Trunk and deploys to Pages (`dist/` is never committed) |
+| `ci.yml` → `build-pages` / `deploy` | `main`, after `test`, `lint`, `wasm`, `browser-smoke`, `windows` | `build-pages` builds with Trunk and uploads the artifact; `deploy` publishes it in a separate job (`dist/` is never committed). Splitting them avoids the artifact lookup race. |
 | `audit.yml` | weekly + manual | `cargo audit`; files an issue per advisory |
 | `release-notes.yml` | tag `v*`, manual, release | Creates/updates the GitHub release body from `CHANGELOG.md` |
 | `build-assets.yml` | tag `v*`, manual | Builds Linux and Windows artifacts and attaches them |

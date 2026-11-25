@@ -16,6 +16,7 @@ r7crypto
 ├── crypto/      StreamCipher, KeyedStreamCipher, AvalancheAnalyzer
 ├── quality/     bit reader, metrics, NIST SP 800-22 tests
 ├── bench/       source throughput / latency (operation benchmarks planned)
+├── time.rs      shared monotonic clock (Instant native, performance.now() on wasm)
 ├── learn/       step-by-step teaching models (no UI)
 ├── viz/         egui app + job abstraction  (feature = "gui")
 ├── web.rs       WASM bootstrap (Trunk entry point)
