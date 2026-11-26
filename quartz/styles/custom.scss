@@ -1,3 +1,14 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+// The Obsidian theme resets image properties with `all: revert`, which drops
+// the width/height attributes emitted from note syntax. Restore the size for
+// images explicitly marked as 48px (social logos and repository icons).
+// The profile photo uses width="auto" and other images have different widths,
+// so neither is affected.
+.markdown-rendered img[width="48"] {
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  max-width: none !important;
+  object-fit: contain;
+}
