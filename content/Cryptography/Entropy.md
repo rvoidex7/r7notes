@@ -55,6 +55,12 @@ $$H_{\infty,\text{Markov1}} = -\log_2 \max_{a,b} P(s_{i+1}=b \mid s_i=a)$$
 
 For a counter, every transition has probability 1, so this collapses to 0.
 
+## Try it in r7crypto
+
+- [Learn Shannon Entropy](https://rvoidex7.github.io/r7crypto/#/learn/shannon-entropy) — opens the byte-by-byte walkthrough in the Learn tab.
+- [Quality Analysis](https://rvoidex7.github.io/r7crypto/#/test) — Shannon, MCV min-entropy, Markov-1 and χ² on the selected source.
+- Implementation: [`src/quality/metrics.rs#L78-L199`](https://github.com/rvoidex7/r7crypto/blob/main/src/quality/metrics.rs#L78-L199) and [`src/learn/entropy_visual.rs#L66-L161`](https://github.com/rvoidex7/r7crypto/blob/main/src/learn/entropy_visual.rs#L66-L161).
+
 ## Related
 
 - [[Random-Number-Generators]]

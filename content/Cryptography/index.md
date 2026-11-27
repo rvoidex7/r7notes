@@ -23,7 +23,8 @@ Working notes on the cryptographic ideas I use in my projects. These are **not**
 
 ## Where these are used
 
-- [[Projects/r7crypto/index|r7crypto]] — a lab that puts these concepts on screen. The notes are the knowledge layer; the app is the experiment layer. Click through from here, try it live on the web once that build ships, and PR corrections to these notes if something is off.
+- [[Projects/r7crypto/index|r7crypto]] — the project notes. The notes are the knowledge layer; the app is the experiment layer.
+- [Live app](https://rvoidex7.github.io/r7crypto/) — try these concepts in the browser without installing anything. Each topic below links to its exact screen and source range.
 
 ## Post-quantum reading list (later module, no code yet)
 

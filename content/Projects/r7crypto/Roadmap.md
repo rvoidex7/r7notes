@@ -38,7 +38,8 @@ No dates. Order matters more than timing. The full internal version lives in the
 1. **Avalanche screen — rework.** A `🔀 Avalanche` tab exists with a 16×16 grid, but that is only one example. The real version shows a **distribution** over many inputs/bit positions, contrasts SHA-256 (~50%) with a weak XOR checksum (~1 bit), draws a `NEAREST`-filtered heatmap (no emoji, no blurred neighbours), and explains cell semantics (output bit index, MSB-first, 8 bits = 1 byte). Runs are deterministic; re-clicking repeats the same experiment. See [[Cryptography/Avalanche-Effect|Avalanche Effect]].
 2. **Benchmark — rework.** Today it measures only the selected source's speed. That is the RNG, not ChaCha20/SHA-256/NIST. The UI will separate **source speed** from **operation speed** and label what each number does and does not mean.
 3. **Two-Time Pad experiment** — encrypt two messages with one keystream and show `C₁ ⊕ C₂ = P₁ ⊕ P₂`. See [[Cryptography/ChaCha20|ChaCha20]].
-4. **In-app links to these notes** — reader → note → live experiment → PR. The web URL is already live; the links inside the app are not.
+4. **Contextual links** — done. Hash fragments such as `#/learn/nist-frequency` open the exact screen; each screen links to its own note and source range; each topic note links back to that screen and those lines. Source module docs link back to both the relevant note section and the app screen.
+5. **Comment audit** — done. Wrong or stale claims were corrected, obvious noise removed, and long explanations moved to r7notes with a link instead of being duplicated in code.
 
 ## Next
 
@@ -82,7 +83,6 @@ Reference material is kept in the repo's gitignored `docs/03`. NDK + Gradle + Pl
 | Benchmark measures source speed only | Small — two labelled sections, use `benchmark_avg` |
 | No `egui_plot` histogram | Small — one dependency, one widget, added with the entropy map |
 | No mobile tab bar | Medium — layout only; 360 px overflow is already covered |
-| No in-app link to r7notes | Small-to-medium — the "Try" benefit depends on it |
 
 Anything marked *Small* is a reasonable first contribution: it touches one module and has an existing test to extend.
 

@@ -55,7 +55,7 @@ Seven sources ship today:
 | `LcgSource` (glibc) | Linear congruential | Uniform-looking, structurally broken |
 | `LcgSource` (RANDU) | Linear congruential | The 15-planes-in-3D classic |
 | `Lfsr16Source` | Linear feedback shift register | Linear, 65,535-byte period |
-| `BiasedSource` | Independent biased bits | Adjustable `P(1)`; frequency test fails off 0.5 |
+| `BiasedSource` | Independent biased bits | Adjustable `P(1)`; long samples fail frequency, small ones can pass |
 | `CounterSource` | `0,1,2,…,255` | Perfect histogram, zero predictability |
 
 `MockEntropy` also exists as a deterministic helper for tests and doc examples.
@@ -72,7 +72,7 @@ The header selector is driven by `SourceKind`, a small `Copy` enum with one vari
 EntropySource::fill_bytes
         │
         ├─► QualityMetrics     (Shannon, min-entropy, Markov-1, χ²)
-        ├─► NistTests          (6 SP 800-22 tests)
+        ├─► NistTests          (6 SP 800-22 families + χ² → 9 P-values)
         └─► PerformanceBench   (SOURCE speed only today)
 
 KeyedStreamCipher (ChaCha20, explicit key + nonce) ─► Use tab
@@ -81,7 +81,7 @@ AvalancheAnalyzer (deterministic SHA-256 input)   ─► Avalanche tab
 
 Operation benchmarks (ChaCha20 / SHA-256 / NIST suite over the same data) are a planned addition to `bench/`.
 
-Heavy paths go through the job abstraction in `viz/job.rs`: a worker thread on native, bounded per-frame polling on wasm. `std::thread::spawn` compiles for wasm but panics at runtime, so the web path never uses it.
+Heavy paths go through the job abstraction in `viz/job.rs`: a worker thread on native, bounded per-frame polling on wasm. `std::thread::spawn` compiles for wasm but panics at runtime, so the web path never uses it. Both paths call the same analysis code, so NIST values and quality metrics match; benchmark timings are wall-clock measurements and are not comparable between native and web.
 
 ## Using the library in code
 

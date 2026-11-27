@@ -33,6 +33,11 @@ Avalanche belongs to **confusion layers** — S-boxes, hash compression function
 - **SHA-256** — flip one input bit, count changed output bits over many trials. The mean should sit near 128 of 256.
 - **ChaCha20** — flip one **key or nonce** bit and compare keystreams. Flipping a plaintext bit proves nothing.
 
+## Try it in r7crypto
+
+- [Avalanche tab](https://rvoidex7.github.io/r7crypto/#/avalanche) — opens the SHA-256 single-bit flip grid.
+- Implementation: [`src/crypto/avalanche.rs#L58-L143`](https://github.com/rvoidex7/r7crypto/blob/main/src/crypto/avalanche.rs#L58-L143).
+
 ## Related
 
 - [[ChaCha20]]

@@ -44,6 +44,12 @@ These exist to be studied, not used:
 
 A CSPRNG with a fixed seed is deterministic: same seed, same stream. That is not a weakness — it is what makes reproducible tests possible. The weakness is reusing the seed, or deriving it from something guessable.
 
+## Try it in r7crypto
+
+- [RNG Arena + Test](https://rvoidex7.github.io/r7crypto/#/test) — opens quality analysis with the source selector in the header.
+- [Benchmark](https://rvoidex7.github.io/r7crypto/#/benchmark) — opens source throughput and latency.
+- Implementation: [`src/entropy/kind.rs#L38-L100`](https://github.com/rvoidex7/r7crypto/blob/main/src/entropy/kind.rs#L38-L100) and [`src/bench/performance.rs#L48-L117`](https://github.com/rvoidex7/r7crypto/blob/main/src/bench/performance.rs#L48-L117).
+
 ## Related
 
 - [[Entropy]]

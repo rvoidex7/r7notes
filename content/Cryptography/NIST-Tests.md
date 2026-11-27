@@ -27,6 +27,9 @@ Passing 800-22 does not prove a generator is secure. A counter can be engineered
 | Longest run of ones | 2.4 | Clustering / periodicity |
 | Cumulative sums | 2.13 | Drift |
 | Serial | 2.11 | Pattern dependence in m-bit words |
+| Chi-square | r7crypto's own check | Byte histogram too skewed *or* too uniform |
+
+`run_all_tests` returns **nine** P-values, not six: Serial and Cumulative Sums each report two directions. Derive totals from the returned list; `examples/quality_check.rs` once hard-coded `/5` and used a wrong threshold because of this.
 
 ## Reading a P-value
 
@@ -49,6 +52,12 @@ The official examples in the standard are the only way to know an implementation
 | Longest run | 128-bit sequence | 0.180609 |
 
 If an implementation disagrees with these, the implementation is wrong — not the standard.
+
+## Try it in r7crypto
+
+- [Learn NIST Frequency](https://rvoidex7.github.io/r7crypto/#/learn/nist-frequency) — opens the Learn tab on the five-step monobit walkthrough.
+- [Run the full suite](https://rvoidex7.github.io/r7crypto/#/test) — P-values for the selected source.
+- Implementation: [`src/quality/nist.rs#L24-L48`](https://github.com/rvoidex7/r7crypto/blob/main/src/quality/nist.rs#L24-L48) and [`src/learn/nist_visual.rs#L52-L137`](https://github.com/rvoidex7/r7crypto/blob/main/src/learn/nist_visual.rs#L52-L137).
 
 ## Related
 

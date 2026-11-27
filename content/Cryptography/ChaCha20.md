@@ -36,6 +36,12 @@ ChaCha20 needs a 256-bit key, not a password. r7crypto derives one with a single
 > [!warning] Demo, not production
 > The passphrase handling in r7crypto is pedagogical. Do not protect real data with it.
 
+## Try it in r7crypto
+
+- [Use: ChaCha20](https://rvoidex7.github.io/r7crypto/#/use) — opens the encrypt/decrypt screen with a real keystream.
+- [Learn: XOR Cipher](https://rvoidex7.github.io/r7crypto/#/learn/xor-cipher) — opens the bit-by-bit XOR walkthrough.
+- Implementation: [`src/crypto/cipher.rs#L107-L143`](https://github.com/rvoidex7/r7crypto/blob/main/src/crypto/cipher.rs#L107-L143) and [`src/learn/steps.rs#L20-L85`](https://github.com/rvoidex7/r7crypto/blob/main/src/learn/steps.rs#L20-L85).
+
 ## Related
 
 - [[Avalanche-Effect]] — why XOR alone does not diffuse bits
