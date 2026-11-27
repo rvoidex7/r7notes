@@ -206,10 +206,19 @@ plugins:
       priority: 5
       condition: not-index
   - source: "@quartz-community/comments"
-    enabled: false
+    enabled: true
     options:
       provider: giscus
-      options: {}
+      options:
+        repo: rvoidex7/r7notes
+        repoId: R_kgDORtkcqg
+        category: Announcements
+        categoryId: DIC_kwDORtkcqs4DMIV3
+        lang: en
+        mapping: url
+        strict: false
+        reactionsEnabled: true
+        inputPosition: bottom
     layout:
       position: afterBody
       priority: 10
@@ -217,13 +226,22 @@ plugins:
     enabled: true
     options:
       links:
-        GitHub: https://github.com/jackyzha0/quartz
-        Discord Community: https://discord.gg/cRFFHYye7t
+        GitHub: https://github.com/rvoidex7/r7notes
+        Connect: https://rvoidex7.github.io/r7notes/connect
     layout:
       position: footer
       priority: 50
   - source: "@quartz-community/recent-notes"
-    enabled: false
+    enabled: true
+    options:
+      limit: 3
+      showTags: true
+      linkToMore: false
+      hideTagPages: true
+      hideFolderPages: true
+    layout:
+      position: afterBody
+      priority: 50
   - source: "@quartz-community/spacer"
     enabled: true
     options: {}
